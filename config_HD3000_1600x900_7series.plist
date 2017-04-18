@@ -29,6 +29,9 @@
 			<string>SSDT-17.aml</string>
 			<string>SSDT-18.aml</string>
 			<string>SSDT-19.aml</string>
+			<string>SSDT-XOSI.aml</string>
+			<string>SSDT-LPC.aml</string>
+			<string>SSDT-UIAC.aml</string>
 		</array>
 		<key>DSDT</key>
 		<dict>
@@ -77,7 +80,7 @@
 		<array>
 			<dict>
 				<key>Signature</key>
-				<string>MCFG</string>
+				<string>#MCFG</string>
 			</dict>
 			<dict>
 				<key>Signature</key>
@@ -261,7 +264,7 @@
 		<key>#ScreenResolution</key>
 		<string>1920x1080</string>
 		<key>Theme</key>
-		<string>Bluemac</string>
+		<string>BGM</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -297,35 +300,11 @@
 		<array>
 			<dict>
 				<key>Comment</key>
-				<string>Enable TRIM for SSD</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>IOAHCIBlockStorage</string>
-				<key>Find</key>
-				<data>AEFQUExFIFNTRAA=</data>
-				<key>Replace</key>
-				<data>AAAAAAAAAAAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.2/10.10.3</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>IOGraphicsFamily</string>
-				<key>Find</key>
-				<data>QYjE6xE=</data>
-				<key>Replace</key>
-				<data>QYjE6zE=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>HDMI-audio HD3000, 0x00010000, port 0205</string>
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelSNBGraphicsFB</string>
+				<string>com.apple.driver.AppleIntelSNBGraphicsFB</string>
 				<key>Find</key>
 				<data>AgUAAAAEAAAHAAAA</data>
 				<key>Replace</key>
@@ -337,7 +316,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelSNBGraphicsFB</string>
+				<string>com.apple.driver.AppleIntelSNBGraphicsFB</string>
 				<key>Find</key>
 				<data>AwQAAAAEAAAJAAAA</data>
 				<key>Replace</key>
@@ -349,7 +328,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelSNBGraphicsFB</string>
+				<string>com.apple.driver.AppleIntelSNBGraphicsFB</string>
 				<key>Find</key>
 				<data>BAYAAAAEAAAJAAAA</data>
 				<key>Replace</key>
@@ -361,23 +340,11 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelSNBGraphicsFB</string>
+				<string>com.apple.driver.AppleIntelSNBGraphicsFB</string>
 				<key>Find</key>
 				<data>AQIEABAHAAAQBwAABQMAAAIAAAAwAAAAAgUAAAAEAAAHAAAAAwQAAAAEAAAJAAAABAYAAAAEAAAJAAAA</data>
 				<key>Replace</key>
 				<data>AQIDABAHAAAQBwAABgIAAAABAAAJAAAABQMAAAIAAAAwAAAABAYAAAAIAAAJAAAAAAAAAAAAAAAAAAAA</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.x/10.11.x (credit lisai9093, cecekpawon)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>AQAAdRc=</data>
-				<key>Name</key>
-				<string>IOGraphicsFamily</string>
-				<key>Replace</key>
-				<data>AQAA6xc=</data>
 			</dict>
 		</array>
 	</dict>
@@ -391,7 +358,7 @@
 	<key>SMBIOS</key>
 	<dict>
 		<key>ProductName</key>
-		<string>MacBookPro8,2</string>
+		<string>MacBookPro8,1</string>
 		<key>Trust</key>
 		<true/>
 	</dict>

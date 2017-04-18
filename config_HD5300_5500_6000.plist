@@ -29,6 +29,9 @@
 			<string>SSDT-17.aml</string>
 			<string>SSDT-18.aml</string>
 			<string>SSDT-19.aml</string>
+			<string>SSDT-XOSI.aml</string>
+			<string>SSDT-LPC.aml</string>
+			<string>SSDT-UIAC.aml</string>
 		</array>
 		<key>DSDT</key>
 		<dict>
@@ -73,7 +76,7 @@
 		<array>
 			<dict>
 				<key>Signature</key>
-				<string>MCFG</string>
+				<string>#MCFG</string>
 			</dict>
 			<dict>
 				<key>Signature</key>
@@ -207,7 +210,7 @@
 		<key>#ScreenResolution</key>
 		<string>1920x1080</string>
 		<key>Theme</key>
-		<string>Bluemac</string>
+		<string>BGM</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -246,8 +249,10 @@
 				<string>Disable minStolenSize less or equal fStolenMemorySize assertion, 10.10.x (based on Austere.J patch)</string>
 				<key>Disabled</key>
 				<true/>
+				<key>MatchOS</key>
+				<string>10.10.x</string>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>Oc92PA==</data>
 				<key>Replace</key>
@@ -258,8 +263,10 @@
 				<string>Disable minStolenSize less or equal fStolenMemorySize assertion, 10.11.beta ( (based on Austere.J patch)</string>
 				<key>Disabled</key>
 				<true/>
+				<key>MatchOS</key>
+				<string>10.11.x</string>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>QTnEdj4=</data>
 				<key>Replace</key>
@@ -267,27 +274,17 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Enable TRIM for SSD</string>
+				<string>Disable minStolenSize less or equal fStolenMemorySize assertion, 10.12.0 ( (based on Austere.J patch)</string>
 				<key>Disabled</key>
 				<true/>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
 				<key>Name</key>
-				<string>IOAHCIBlockStorage</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
-				<data>AEFQUExFIFNTRAA=</data>
+				<data>iUXIOcd2Tw==</data>
 				<key>Replace</key>
-				<data>AAAAAAAAAAAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.x/10.11.x (credit lisai9093, cecekpawon)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>AQAAdRc=</data>
-				<key>Name</key>
-				<string>IOGraphicsFamily</string>
-				<key>Replace</key>
-				<data>AQAA6xc=</data>
+				<data>iUXIOcfrTw==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -295,7 +292,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AQUJAAQAAAAEAAAA</data>
 				<key>Replace</key>
@@ -307,7 +304,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AgQJAAAIAACCAAAA</data>
 				<key>Replace</key>
@@ -319,7 +316,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AQUJAAAEAAABEAAA</data>
 				<key>Replace</key>
@@ -331,7 +328,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AQUJAAAEAAAHBQAA</data>
 				<key>Replace</key>
@@ -343,7 +340,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AgQJAAAEAAAHBQAA</data>
 				<key>Replace</key>
@@ -351,11 +348,25 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>HDMI-audio, port 0204, 0x16060002 0x16060002 0x16160002 0x16260002 0x16220002 0x162b0002 0x162b0004 0x16260004 0x16220007 0x162b0008 0x16260008</string>
+				<key>Disabled</key>
+				<true/>
+				<key>MatchOS</key>
+				<string>10.11.6,10.12.x</string>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
+				<key>Find</key>
+				<data>AgQKAAAEAAAHBQAA</data>
+				<key>Replace</key>
+				<data>AgQKAAAIAACCAAAA</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>HDMI-audio, port 0105, 0x16120003 0x16120005 0x16120006 0x16260006</string>
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AQULAAAEAAAHBQAA</data>
 				<key>Replace</key>
@@ -367,7 +378,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AgQLAAAEAAAHBQAA</data>
 				<key>Replace</key>
@@ -379,7 +390,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AwYIAAAEAAARAAAA</data>
 				<key>Replace</key>
@@ -391,7 +402,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>AQAeFgECAgIAACACAABQAQ==</data>
 				<key>Replace</key>
@@ -403,7 +414,7 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>AppleIntelBDWGraphicsFramebuffer</string>
+				<string>com.apple.driver.AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>/wAAAAEAAABAAAAAAAA=</data>
 				<key>Replace</key>
