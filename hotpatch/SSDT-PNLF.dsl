@@ -3,11 +3,14 @@
 #define SANDYIVY_PWMMAX 0x710
 #define HASWELL_PWMMAX 0xad9
 #define SKYLAKE_PWMMAX 0x56c
+#define CUSTOM_PWMMAX_07a1 0x07a1
+#define CUSTOM_PWMMAX_1499 0x1499
 
 DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
 {
     External(RMCF.BKLT, IntObj)
     External(RMCF.LMAX, IntObj)
+    External(RMCF.FBTP, IntObj)
 
     External(_SB.PCI0.IGPU, DeviceObj)
     Scope(_SB.PCI0.IGPU)
@@ -60,17 +63,36 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
             // Adjustment required when using AppleBacklight.kext
             Local0 = GDID
             Local2 = Ones
-            if (CondRefOf(\RMCF.LMAX)) { Local2 = \RMCF.LMAX }
-
-            If (Ones != Match(Package()
+            If (CondRefOf(\RMCF.LMAX)) { Local2 = \RMCF.LMAX }
+            // Determine framebuffer type (for PWM register layout)
+            Local3 = 0
+            If (CondRefOf(\RMCF.FBTP)) { Local3 = \RMCF.FBTP }
+            If (0 == Local3)
+            {
+                If (Ones != Match(Package()
+                    {
+                        // Sandy HD3000
+                        0x010b, 0x0102,
+                        0x0106, 0x1106, 0x1601, 0x0116, 0x0126,
+                        0x0112, 0x0122,
+                        // Ivy
+                        0x0152, 0x0156, 0x0162, 0x0166,
+                        0x016a,
+                        // Arrandale
+                        0x0046, 0x0042,
+                    }, MEQ, Local0, MTR, 0, 0))
                 {
-                    // Sandy
-                    0x0116, 0x0126, 0x0112, 0x0122,
-                    // Ivy
-                    0x0166, 0x016a,
-                    // Arrandale
-                    0x42, 0x46
-                }, MEQ, Local0, MTR, 0, 0))
+                    Local3 = 1
+                }
+                Else
+                {
+                    // otherwise... Assume Haswell/Broadwell/Skylake
+                    Local3 = 2
+                }
+            }
+
+            // Local3 is now framebuffer type, depending on RMCF.FBTP or device-id detect
+            If (1 == Local3)
             {
                 // Sandy/Ivy
                 if (Ones == Local2) { Local2 = SANDYIVY_PWMMAX }
@@ -99,7 +121,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
                     }
                 }
             }
-            Else
+            ElseIf (2 == Local3) // No other values are valid for RMCF.FBTP
             {
                 // otherwise... Assume Haswell/Broadwell/Skylake
                 if (Ones == Local2)
@@ -110,7 +132,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
                             // Haswell
                             0x0d26, 0x0a26, 0x0d22, 0x0412, 0x0416, 0x0a16, 0x0a1e, 0x0a1e, 0x0a2e, 0x041e, 0x041a,
                             // Broadwell
-                            0x0BD1, 0x0BD2, 0x0BD3, 0x1606, 0x160e, 0x1616, 0x161e, 0x1626, 0x1622, 0x1612, 0x162b,
+                            0x0bd1, 0x0bd2, 0x0BD3, 0x1606, 0x160e, 0x1616, 0x161e, 0x1626, 0x1622, 0x1612, 0x162b,
                         }, MEQ, Local0, MTR, 0, 0))
                     {
                         Local2 = HASWELL_PWMMAX
@@ -146,6 +168,8 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
             If (Local2 == SANDYIVY_PWMMAX) { _UID = 14 }
             ElseIf (Local2 == HASWELL_PWMMAX) { _UID = 15 }
             ElseIf (Local2 == SKYLAKE_PWMMAX) { _UID = 16 }
+            ElseIf (Local2 == CUSTOM_PWMMAX_07a1) { _UID = 17 }
+            ElseIf (Local2 == CUSTOM_PWMMAX_1499) { _UID = 18 }
             Else { _UID = 99 }
         }
     }

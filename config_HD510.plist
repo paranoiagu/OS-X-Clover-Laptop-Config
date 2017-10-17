@@ -109,19 +109,37 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change EHC1 to EH01</string>
+					<string>change ECDV to EC</string>
+					<key>Disabled</key>
+					<true/>
 					<key>Find</key>
-					<data>RUhDMQ==</data>
+					<data>RUNEVg==</data>
 					<key>Replace</key>
-					<data>RUgwMQ==</data>
+					<data>RUNfXw==</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change EHC2 to EH02</string>
+					<string>change HDAS to HDEF</string>
 					<key>Find</key>
-					<data>RUhDMg==</data>
+					<data>SERBUw==</data>
 					<key>Replace</key>
-					<data>RUgwMg==</data>
+					<data>SERFRg==</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change HECI to IMEI</string>
+					<key>Find</key>
+					<data>SEVDSQ==</data>
+					<key>Replace</key>
+					<data>SU1FSQ==</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change MEI to IMEI</string>
+					<key>Find</key>
+					<data>TUVJXw==</data>
+					<key>Replace</key>
+					<data>SU1FSQ==</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
@@ -159,46 +177,11 @@
 				<key>Signature</key>
 				<string>DMAR</string>
 			</dict>
-		</array>
-		<key>#DropTables</key>
-		<array>
-			<dict>
-				<key>Signature</key>
-				<string>MCFG</string>
-			</dict>
-			<dict>
-				<key>Signature</key>
-				<string>DMAR</string>
-			</dict>
 			<dict>
 				<key>Signature</key>
 				<string>SSDT</string>
 				<key>TableId</key>
-				<string>CpuPm</string>
-			</dict>
-			<dict>
-				<key>Signature</key>
-				<string>SSDT</string>
-				<key>TableId</key>
-				<string>Cpu0Cst</string>
-			</dict>
-			<dict>
-				<key>Signature</key>
-				<string>SSDT</string>
-				<key>TableId</key>
-				<string>Cpu0Ist</string>
-			</dict>
-			<dict>
-				<key>Signature</key>
-				<string>SSDT</string>
-				<key>TableId</key>
-				<string>ApCst</string>
-			</dict>
-			<dict>
-				<key>Signature</key>
-				<string>SSDT</string>
-				<key>TableId</key>
-				<string>ApIst</string>
+				<string>xh_rvp10</string>
 			</dict>
 		</array>
 		<key>SSDT</key>
@@ -207,23 +190,15 @@
 			<false/>
 			<key>Generate</key>
 			<dict>
-				<key>CStates</key>
-				<false/>
-				<key>PStates</key>
-				<false/>
-				<key>APSN</key>
-				<false/>
-				<key>APLF</key>
-				<false/>
 				<key>PluginType</key>
-				<false/>
+				<true/>
 			</dict>
 		</dict>
 	</dict>
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>kext-dev-mode=1 dart=0 slide=0 nv_disable=1</string>
+		<string>kext-dev-mode=1 dart=0 nv_disable=1</string>
 		<key>DefaultVolume</key>
 		<string>LastBootedVolume</string>
 		<key>NeverHibernate</key>
@@ -233,6 +208,11 @@
 		<key>Timeout</key>
 		<integer>5</integer>
 		<key>XMPDetection</key>
+		<false/>
+	</dict>
+	<key>CPU</key>
+	<dict>
+		<key>UseARTFrequency</key>
 		<false/>
 	</dict>
 	<key>Devices</key>
@@ -269,9 +249,29 @@
 				<key>Comment</key>
 				<string>Inject bogus class-code to prevent graphics drivers loading for NVidia</string>
 			</dict>
+			<dict>
+				<key>Device</key>
+				<string>IntelGFX</string>
+				<key>Key</key>
+				<string>RM,device-id</string>
+				<key>Value</key>
+				<data>AhkAAA==</data>
+				<key>Comment</key>
+				<string>spoof 0x1902 just in case FakePCIID_Intel_HD_Graphics installed</string>
+			</dict>
 		</array>
 		<key>#AddProperties</key>
 		<array>
+			<dict>
+				<key>Device</key>
+				<string>IntelGFX</string>
+				<key>Key</key>
+				<string>RM,device-id</string>
+				<key>Value</key>
+				<data>AhkAAA==</data>
+				<key>Comment</key>
+				<string>spoof 0x1902 just in case FakePCIID_Intel_HD_Graphics installed</string>
+			</dict>
 			<dict>
 				<key>Device</key>
 				<string>IntelGFX</string>
@@ -315,6 +315,11 @@
 		<dict>
 			<key>Inject</key>
 			<integer>0</integer>
+		</dict>
+		<key>FakeID</key>
+		<dict>
+			<key>IntelGFX</key>
+			<string>0x19028086</string>
 		</dict>
 		<key>USB</key>
 		<dict>
@@ -380,7 +385,7 @@
 	<key>Graphics</key>
 	<dict>
 		<key>ig-platform-id</key>
-		<string>0x01660004</string>
+		<string>0x19160000</string>
 		<key>Inject</key>
 		<dict>
 			<key>ATI</key>
@@ -401,8 +406,6 @@
 		<true/>
 		<key>DellSMBIOSPatch</key>
 		<false/>
-		<key>KernelIvyXCPM</key>
-		<false/>
 		<key>KernelLapic</key>
 		<true/>
 		<key>KernelPm</key>
@@ -415,63 +418,64 @@
 		<array>
 			<dict>
 				<key>Comment</key>
-				<string>HDMI-video, 64MB BIOS, HD4000 0x01660004 #1 of 2</string>
+				<string>0x19160000/etc, 32MB BIOS, 19MB framebuffer 9MB cursor bytes (credit RehabMan)</string>
 				<key>Disabled</key>
 				<false/>
 				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferCapri</string>
+				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
 				<key>Find</key>
-				<data>BABmAQEDAQEAAAAC</data>
+				<data>AAAgAgAAUAE=</data>
 				<key>Replace</key>
-				<data>BABmAQECBAIAAAAE</data>
+				<data>AAAwAQAAkAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>HDMI-video, 64MB BIOS, HD4000 0x01660004 #2 of 2</string>
+				<string>eDP, port 0000, 0x191e0000, 0x19160000, 0x19260000, 0x19270000, 0x191b0000, 0x19160002, 0x19260002, 0x191e0003, 0x19260004, 0x19270004, 0x193b0005 credit syscl</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
+				<key>Find</key>
+				<data>AAAIAAIAAACYAAAAAQUJAAAEAAA=</data>
+				<key>Replace</key>
+				<data>AAAIAAAEAACYAAAAAQUJAAAEAAA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable lid wake for 0x19260002 credit syscl/lighting/Yating Zhou</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
+				<key>Find</key>
+				<data>ChMDAAAABgAAAAAAAAAAAA==</data>
+				<key>Replace</key>
+				<data>DxMDAAAABgAAAAAAAAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable lid wake for 0x19260004 credit syscl/lighting/Yating Zhou</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
+				<key>Find</key>
+				<data>CgsDAAAHBgADAAAABAAAAA==</data>
+				<key>Replace</key>
+				<data>DwsDAAAHBgADAAAABAAAAA==</data>
+			</dict>
+		</array>
+		<key>KernelToPatch</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>MSR 0xE2 _xcpm_idle instant reboot(c) Pike R. Alpha</string>
 				<key>Disabled</key>
 				<false/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferCapri</string>
 				<key>Find</key>
-				<data>MAIAAAAAAAABAAAAQAAAAAAAAAABAAAAQAAAAAAAAAABAAAAQAAAAAAAAAAAAAAA</data>
+				<data>ILniAAAADzA=</data>
 				<key>Replace</key>
-				<data>MAIAAAIFAAAABAAABwQAAAMEAAAABAAAgQAAAAQGAAAABAAAgQAAAAAAAAAAAgAR</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI-audio HD4000 0x01660004, port 0205</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferCapri</string>
-				<key>Find</key>
-				<data>AgUAAAAEAAAHBAAA</data>
-				<key>Replace</key>
-				<data>AgUAAAAIAAAGAAAA</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI-audio HD4000 0x01660004, port 0304</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferCapri</string>
-				<key>Find</key>
-				<data>AwQAAAAEAACBAAAA</data>
-				<key>Replace</key>
-				<data>AwQAAAAIAAAGAAAA</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI-audio HD4000 0x01660004, port 0406</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferCapri</string>
-				<key>Find</key>
-				<data>BAYAAAAEAACBAAAA</data>
-				<key>Replace</key>
-				<data>BAYAAAAIAAAGAAAA</data>
+				<data>ILniAAAAkJA=</data>
 			</dict>
 		</array>
 	</dict>
@@ -484,8 +488,10 @@
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
+		<key>ProductName-Comment</key>
+		<string>Using Haswell MacBookAir6,2 until Clover has support for Skylake identifiers</string>
 		<key>ProductName</key>
-		<string>MacBookPro9,2</string>
+		<string>MacBookAir6,2</string>
 		<key>Trust</key>
 		<true/>
 	</dict>

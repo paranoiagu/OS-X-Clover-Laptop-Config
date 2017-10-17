@@ -12,13 +12,18 @@ DefinitionBlock("", "SSDT", 2, "hack", "PTSWAK", 0)
 
     External(RMCF.DPTS, IntObj)
     External(RMCF.SHUT, IntObj)
+    External(RMCF.XPEE, IntObj)
+    External(RMCF.SSTF, IntObj)
 
     // In DSDT, native _PTS and _WAK are renamed ZPTS/ZWAK
     // As a result, calls to these methods land here.
     Method(_PTS, 1)
     {
-        // Shutdown fix, if enabled
-        If (CondRefOf(\RMCF.SHUT)) { If (\RMCF.SHUT && 5 == Arg0) { Return } }
+        if (5 == Arg0)
+        {
+            // Shutdown fix, if enabled
+            If (CondRefOf(\RMCF.SHUT)) { If (\RMCF.SHUT) { Return } }
+        }
 
         If (CondRefOf(\RMCF.DPTS))
         {
@@ -32,6 +37,13 @@ DefinitionBlock("", "SSDT", 2, "hack", "PTSWAK", 0)
 
         // call into original _PTS method
         ZPTS(Arg0)
+
+        If (5 == Arg0)
+        {
+            // XHC.PMEE fix, if enabled
+            External(\_SB.PCI0.XHC.PMEE, FieldUnitObj)
+            If (CondRefOf(\RMCF.XPEE)) { If (\RMCF.XPEE && CondRefOf(\_SB.PCI0.XHC.PMEE)) { \_SB.PCI0.XHC.PMEE = 0 } }
+        }
     }
     Method(_WAK, 1)
     {
@@ -49,6 +61,17 @@ DefinitionBlock("", "SSDT", 2, "hack", "PTSWAK", 0)
                 // disable discrete graphics
                 If (CondRefOf(\_SB.PCI0.PEG0.PEGP._OFF)) { \_SB.PCI0.PEG0.PEGP._OFF() }
                 If (CondRefOf(\_SB.PCI0.PEGP.DGFX._OFF)) { \_SB.PCI0.PEGP.DGFX._OFF() }
+            }
+        }
+
+        If (CondRefOf(\RMCF.SSTF))
+        {
+            If (\RMCF.SSTF)
+            {
+                // call _SI._SST to indicate system "working"
+                // for more info, read ACPI specification
+                External(\_SI._SST, MethodObj)
+                If (3 == Arg0 && CondRefOf(\_SI._SST)) { \_SI._SST(1) }
             }
         }
 
